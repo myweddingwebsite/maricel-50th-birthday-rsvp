@@ -1,0 +1,16 @@
+{
+  "name": "maricel-50th-birthday-rsvp",
+  "version": "1.0.0",
+  "description": "Birthday RSVP — Maricel's 50th (Vercel Functions + Neon Postgres)",
+  "scripts": {
+    "dev": "vercel dev"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^1.2.0"
+  },
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  }
+}

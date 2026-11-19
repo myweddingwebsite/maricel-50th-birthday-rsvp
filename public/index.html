@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>RSVP &#8212; Maricel&rsquo;s 50th Birthday</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Cinzel:wght@400;500;600;700&family=Jost:wght@300;400;500;600&family=Pinyon+Script&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      /* Black & Gold palette — onyx, gold, champagne, ivory */
+      --butter:      #E8D27A;
+      --butter-deep: #D4B94F;
+      --butter-soft: #F3E9B9;
+      --sage:      #AEB69A;
+      --sage-deep: #838C6C;
+      --sage-soft: #E7EADD;
+      --champagne:      #D8C39A;
+      --champagne-deep: #B99B62;
+      --champagne-soft: #EDE1C4;
+      --beige:      #CDBBA3;
+      --beige-deep: #AC957A;
+      --beige-soft: #EAE0D2;
+
+      /* Black & Gold card accents */
+      --black-deep: #0A0A0A;
+      --black:      #161616;
+      --black-soft: #1F1B12;
+      --gold:      #E3C567;
+      --gold-deep: #B8952E;
+      --gold-soft: #F0DFA0;
+
+      /* Silver tones (kept for reference) */
+      --silver:      #D6D6D6;
+      --silver-deep: #B0B0B0;
+      --silver-soft: #EDEDED;
+
+      --ivory:  #FAF6EB;
+      --cream:  #FBF7EC;
+      --sand:   #F3ECDA;
+
+      --text-dark:  #4A3F27;
+      --text-mid:   #6B5C3A;
+      --text-soft:  rgba(74,63,39,0.72);
+      --text-muted: rgba(74,63,39,0.48);
+
+      /* Light text — used on the black card surface for readability */
+      --text-light:       #F5EFDD;
+      --text-light-soft:  rgba(245,239,221,0.86);
+      --text-light-muted: rgba(245,239,221,0.58);
+
+      --border:       rgba(185,155,98,0.30);
+      --border-mid:   rgba(74,63,39,0.20);
+      --border-soft:  rgba(74,63,39,0.14);
+      --border-light: rgba(227,197,103,0.35);
+
+      --shadow-card: 0 34px 84px rgba(10,10,10,0.32), 0 10px 28px rgba(184,149,46,0.16);
+      --transition:  0.28s cubic-bezier(0.4,0,0.2,1);
+      --radius-outer: 30px;
+      --radius-mid:   27px;
+      --radius-inner: 24px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      min-height: 100vh;
+      font-family: 'Jost', sans-serif;
+      background-color: #070707;
+      background-image:
+        radial-gradient(ellipse 120% 50% at 50% 0%,   rgba(227,197,103,0.10) 0%, transparent 55%),
+        radial-gradient(ellipse 60% 70% at 0% 100%,   rgba(184,149,46,0.12) 0%, transparent 55%),
+        radial-gradient(ellipse 55% 65% at 100% 40%,  rgba(227,197,103,0.08) 0%, transparent 55%),
+        linear-gradient(180deg, #0B0B0B 0%, #070707 45%, #0F0D08 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 56px 16px 72px;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* ================================================================
+       ELEGANT FALLING FLOWER ANIMATION
+    ================================================================ */
+    #petalCanvas {
+      position: fixed; inset: 0; width: 100%; height: 100%;
+      z-index: 4; pointer-events: none;
+    }
+
+    .bg-glow { position: fixed; pointer-events: none; z-index: 0; border-radius: 50%; }
+    .bg-glow-1 {
+      width: 680px; height: 680px; top: -260px; right: -200px;
+      background: radial-gradient(circle, rgba(227,197,103,0.14) 0%, transparent 66%);
+      animation: gDrift 20s ease-in-out infinite alternate;
+    }
+    .bg-glow-2 {
+      width: 540px; height: 540px; bottom: -190px; left: -170px;
+      background: radial-gradient(circle, rgba(184,149,46,0.12) 0%, transparent 66%);
+      animation: gDrift 26s ease-in-out infinite alternate; animation-delay: -12s;
+    }
+    .bg-glow-3 {
+      width: 420px; height: 420px; top: 42%; right: -140px;
+      background: radial-gradient(circle, rgba(240,223,160,0.10) 0%, transparent 66%);
+      animation: gDrift 16s ease-in-out infinite alternate; animation-delay: -6s;
+    }
+    @keyframes gDrift {
+      from { transform: scale(1) translate(0,0); }
+      to   { transform: scale(1.07) translate(-15px,18px); }
+    }
+
+    /* ================================================================
+       CARD — rounded rectangle
+    ================================================================ */
+    .card-wrap {
+      position: relative; z-index: 3;
+      width: 100%; max-width: 600px;
+      animation: cardRise 1.1s cubic-bezier(0.22,1,0.36,1) both;
+    }
+    @keyframes cardRise {
+      from { opacity: 0; transform: translateY(46px) scale(0.97); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .card-f1 {
+      padding: 3px;
+      border-radius: var(--radius-outer);
+      background: linear-gradient(145deg, var(--gold-deep), var(--black), var(--gold), var(--black), var(--gold-deep));
+      box-shadow: var(--shadow-card),
+        0 0 0 6px  rgba(10,10,10,0.14),
+        0 0 0 10px rgba(184,149,46,0.08);
+    }
+    .card-f2 { padding: 2px; border-radius: var(--radius-mid); background: var(--black-deep); }
+
+    /* CARD SURFACE — elegant black */
+    .card {
+      background: linear-gradient(165deg, var(--black-deep) 0%, var(--black) 55%, var(--black-deep) 100%);
+      overflow: hidden; position: relative;
+      border-radius: var(--radius-inner);
+    }
+    .card::before {
+      content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.73' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    }
+    .card::after {
+      content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 70% 50% at 25% 15%, rgba(227,197,103,0.10) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 55% at 80% 85%, rgba(227,197,103,0.07) 0%, transparent 60%);
+    }
+
+    .card-ib1 { position: absolute; inset: 11px; border: 1px solid var(--border-light); border-radius: calc(var(--radius-inner) - 11px); pointer-events: none; z-index: 1; }
+
+    .card > *:not(.card-ib1) { position: relative; z-index: 2; }
+
+    .card-accent-stripe {
+      height: 5px;
+      background: linear-gradient(90deg,
+        var(--gold-deep) 0%, var(--gold) 25%,
+        var(--gold-soft) 50%, var(--gold) 75%,
+        var(--gold-deep) 100%);
+      position: relative; z-index: 3;
+    }
+
+    /* ================================================================
+       HEADER
+    ================================================================ */
+    .card-header {
+      background: transparent;
+      padding: 46px 56px 36px;
+      text-align: center;
+      position: relative; overflow: hidden;
+      border-bottom: 2px solid var(--gold-deep);
+    }
+    .card-header > * { position: relative; z-index: 1; }
+
+    .header-eyebrow {
+      font-family: 'Jost', sans-serif; font-size: 9px; font-weight: 500;
+      letter-spacing: 0.5em; color: var(--gold);
+      text-transform: uppercase; margin-bottom: 16px; opacity: 0.95;
+    }
+
+    .couple-name {
+      font-family: 'Pinyon Script', cursive;
+      font-weight: 400;
+      font-size: clamp(50px, 11vw, 74px);
+      color: var(--gold);
+      line-height: 1.15; display: block;
+      text-shadow: 0 2px 14px rgba(10,10,10,0.5);
+    }
+    .couple-amp {
+      font-family: 'Pinyon Script', cursive;
+      font-size: clamp(32px, 7vw, 48px);
+      color: var(--champagne); display: block;
+      line-height: 1.1; margin: 2px 0;
+    }
+
+    .age-block {
+      display: flex; align-items: center; justify-content: center; gap: 16px;
+      margin: 6px 0 4px;
+    }
+    .age-num {
+      font-family: 'Cinzel', serif; font-weight: 600;
+      font-size: clamp(58px, 13vw, 84px); line-height: 1;
+      background: linear-gradient(180deg, var(--gold-soft) 0%, var(--gold) 45%, var(--gold-deep) 100%);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      text-shadow: none; letter-spacing: 0.04em;
+    }
+    .age-side {
+      font-family: 'Jost', sans-serif; font-size: 10px; font-weight: 500;
+      letter-spacing: 0.42em; text-transform: uppercase; color: var(--text-light-soft);
+      line-height: 1.9; text-align: center; min-width: 70px;
+    }
+    .age-bar { width: 1px; height: 46px; background: linear-gradient(180deg, transparent, var(--gold-deep), transparent); }
+    .nw { white-space: nowrap; }
+    @media (max-width: 540px) { .dot-sep { display: none; } .wedding-date .nw { display: block; } }
+    .event-venue {
+      font-family: 'Jost', sans-serif; font-size: clamp(10px, 2vw, 12px); font-weight: 500;
+      letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold);
+      margin-top: 6px;
+    }
+    .wedding-date {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(16px, 3.2vw, 22px);
+      font-style: italic; font-weight: 400;
+      color: var(--text-light-soft); letter-spacing: 0.1em;
+      margin: 12px 0 4px;
+    }
+
+    .names-rule {
+      display: flex; align-items: center; gap: 10px;
+      margin: 20px 0 16px;
+    }
+    .names-rule-line-l { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-deep), var(--gold)); }
+    .names-rule-line-r { flex: 1; height: 1px; background: linear-gradient(90deg, var(--gold), var(--gold-deep), transparent); }
+    .names-rule-flower  { font-size: 12px; color: var(--gold); flex-shrink: 0; opacity: 0.95; }
+    .names-rule-dot     { width: 3px; height: 3px; border-radius: 50%; background: var(--gold-deep); flex-shrink: 0; }
+
+    .header-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(19px, 4.2vw, 28px); font-weight: 400;
+      letter-spacing: 0.52em; color: var(--gold);
+      display: block; margin-bottom: 10px; text-indent: 0.52em;
+      position: relative;
+    }
+    .header-title::after {
+      content: ''; display: block; width: 46px; height: 1px;
+      margin: 10px auto 0;
+      background: linear-gradient(90deg, transparent, var(--gold-deep) 30%, var(--gold) 50%, var(--gold-deep) 70%, transparent);
+      text-indent: 0;
+    }
+    .header-subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(15px, 2.8vw, 20px); font-style: italic; font-weight: 300;
+      color: var(--text-light-soft); letter-spacing: 0.04em;
+    }
+
+    /* TAGLINE — champagne */
+    .tagline-band {
+      padding: 18px 56px;
+      background: linear-gradient(135deg, var(--gold-soft), var(--gold) 60%, var(--gold-deep) 100%);
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+    }
+    .tagline-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(16px, 3vw, 21px); font-style: italic; font-weight: 300;
+      color: var(--text-dark); line-height: 1.68;
+    }
+    .tagline-text strong { font-style: normal; font-weight: 600; color: #3A2A0A; }
+
+    /* ================================================================
+       FORM
+    ================================================================ */
+    .form-body { padding: 32px 56px 0; }
+    .field-group { margin-bottom: 28px; }
+
+    .field-label {
+      display: block; font-family: 'Jost', sans-serif;
+      font-size: clamp(11px, 2vw, 14px); font-weight: 500;
+      letter-spacing: 0.30em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 10px;
+    }
+
+    .field-input {
+      width: 100%; padding: 10px 0 12px;
+      background: transparent; border: none;
+      border-bottom: 1px solid var(--border-light);
+      border-radius: 0; color: var(--text-light);
+      font-family: 'Jost', sans-serif; font-size: 16px; font-weight: 400;
+      outline: none; transition: border-color var(--transition);
+    }
+    .field-input:focus { border-bottom-color: var(--gold); }
+    .field-input::placeholder { color: var(--text-light-muted); }
+    .field-input:disabled { color: var(--text-light-soft); }
+
+    .status-bar {
+      display: flex; align-items: center; gap: 8px;
+      margin-top: 12px; font-size: 13px; color: var(--text-light-soft);
+      font-family: 'Jost', sans-serif;
+    }
+    .status-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; background: var(--gold-deep); }
+    .status-bar.found .status-dot { background: var(--gold); }
+    .status-bar.error .status-dot { background: #e08585; }
+    .status-bar.error { color: #f0b8b8; }
+
+    .seat-panel {
+      text-align: center; padding: 22px 20px;
+      background: linear-gradient(135deg, var(--gold-soft), var(--ivory) 55%, var(--champagne-soft));
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      margin: 0 -56px;
+    }
+    .seat-panel-label {
+      font-family: 'Jost', sans-serif; font-size: 11px; font-weight: 500;
+      letter-spacing: 0.24em; text-transform: uppercase; color: #6B5320;
+      margin-bottom: 6px;
+    }
+    .seat-number {
+      font-family: 'Cinzel', serif; font-size: 34px; font-weight: 600; color: var(--black-deep);
+    }
+    .seat-sublabel {
+      font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 15px; color: var(--text-dark); margin-top: 2px;
+    }
+
+    .guest-section { padding: 0 56px; }
+    .guest-hint {
+      font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 14px;
+      color: var(--text-light-soft); margin-top: 4px; margin-bottom: 16px;
+    }
+
+    .guest-field-row {
+      display: none; align-items: center; gap: 12px;
+      padding: 10px 0; border-bottom: 1px dashed var(--border-light);
+    }
+    .guest-field-row.show { display: flex; }
+    .guest-num { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 14px; color: var(--gold); width: 22px; flex-shrink: 0; }
+    .guest-input-wrap { flex: 1; min-width: 0; }
+    .guest-input-wrap .field-input { padding: 6px 0 8px; font-size: 15px; }
+
+    .attend-toggle { display: flex; align-items: center; gap: 8px; cursor: pointer; flex-shrink: 0; }
+    .attend-toggle input { display: none; }
+    .toggle-track {
+      width: 32px; height: 17px; border-radius: 20px;
+      background: rgba(245,239,221,0.18); position: relative; flex-shrink: 0;
+      transition: background var(--transition);
+      border: 1px solid var(--border-light);
+    }
+    .toggle-thumb {
+      position: absolute; top: 1px; left: 1px;
+      width: 13px; height: 13px; border-radius: 50%;
+      background: #fff; transition: transform var(--transition);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    }
+    .attend-toggle input:checked + .toggle-track { background: var(--gold-deep); border-color: var(--gold-deep); }
+    .attend-toggle input:checked + .toggle-track .toggle-thumb { transform: translateX(15px); }
+    .toggle-label { font-size: 12px; color: var(--text-light-soft); min-width: 70px; text-align: right; }
+
+    .btn-wrap { padding: 30px 56px 36px; }
+    .btn-submit {
+      width: 100%; padding: 16px; cursor: pointer;
+      background: var(--gold-deep); color: var(--black-deep);
+      border: 1px solid var(--gold); border-radius: 8px;
+      font-family: 'Jost', sans-serif; font-size: 13px; font-weight: 600;
+      letter-spacing: 0.32em; text-transform: uppercase; text-indent: 0.32em;
+      transition: all var(--transition); position: relative; overflow: hidden;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+    }
+    .btn-submit:hover:not(:disabled) { background: var(--gold); border-color: var(--gold); }
+    .btn-submit:disabled { opacity: 0.55; cursor: not-allowed; }
+    .btn-spinner {
+      display: none; width: 14px; height: 14px;
+      border: 1.5px solid rgba(10,10,10,0.3); border-top-color: var(--black-deep);
+      border-radius: 50%; animation: spin .8s linear infinite;
+    }
+    .btn-submit.loading .btn-spinner { display: inline-block; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .note-section {
+      padding: 24px 56px 30px;
+      border-top: 1px solid var(--border-light); margin-top: 6px; text-align: center;
+    }
+    .note-section p {
+      font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 14px;
+      line-height: 1.9; color: var(--text-light-soft); margin-bottom: 10px;
+    }
+    .note-section p:last-child { margin-bottom: 0; }
+    .note-section p strong { color: var(--gold); font-style: normal; font-weight: 600; }
+
+    /* DEADLINE — champagne */
+    .deadline-band {
+      padding: 14px 56px;
+      background: linear-gradient(135deg, var(--gold-deep), var(--gold-soft));
+      border-top: 1px solid var(--gold-deep);
+      text-align: center;
+      position: relative;
+    }
+    .deadline-band::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background: linear-gradient(120deg, rgba(74,63,39,0.06) 0%, transparent 55%);
+    }
+    .deadline-label {
+      font-family: 'Jost', sans-serif;
+      font-size: clamp(9px, 1.8vw, 12px); font-weight: 600;
+      letter-spacing: 0.38em; text-transform: uppercase;
+      color: #3A2A0A; opacity: 0.92;
+      display: block; margin-bottom: 4px;
+      position: relative; z-index: 1;
+    }
+    .deadline-date {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(16px, 3.2vw, 22px); font-style: italic; font-weight: 500;
+      color: var(--text-dark); letter-spacing: 0.06em;
+      position: relative; z-index: 1;
+    }
+
+    .page-footer { margin-top: 24px; text-align: center; position: relative; z-index: 3; }
+    .page-footer p {
+      font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 18px;
+      color: var(--gold);
+    }
+
+    /* ---- "Did you mean" suggestions ---- */
+    .status-bar.suggest { color: var(--gold-soft); }
+    .status-bar.suggest .status-dot { background: var(--gold); }
+    .suggest-box { display: none; flex-direction: column; gap: 8px; margin-top: 12px; }
+    .suggest-box.visible { display: flex; animation: suggestIn .35s ease both; }
+    @keyframes suggestIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    .suggest-btn {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      width: 100%; min-height: 48px; padding: 10px 16px; text-align: left; cursor: pointer;
+      background: rgba(227,197,103,0.08); border: 1px solid var(--border-light); border-radius: 8px;
+      font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 500; color: var(--text-light);
+      transition: background var(--transition), border-color var(--transition);
+      -webkit-tap-highlight-color: transparent;
+    }
+    .suggest-btn:hover { background: rgba(227,197,103,0.16); border-color: var(--gold); }
+    .suggest-btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+    .suggest-name { word-break: break-word; }
+    .suggest-go { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 14px; color: var(--gold); white-space: nowrap; flex-shrink: 0; }
+
+    /* ---- Message to the Celebrant ---- */
+    .message-group { padding: 6px 56px 0; }
+    .message-input {
+      width: 100%; min-height: 96px; resize: vertical; padding: 12px 14px;
+      background: rgba(245,239,221,0.05); border: 1px solid var(--border-light);
+      border-radius: 10px; color: var(--text-light);
+      font-family: 'Cormorant Garamond', serif; font-size: 17px; line-height: 1.55;
+      outline: none; transition: border-color var(--transition), background var(--transition);
+    }
+    .message-input:focus { border-color: var(--gold); background: rgba(245,239,221,0.08); }
+    .message-input::placeholder { color: var(--text-light-muted); font-style: italic; }
+    .optional-tag { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 500;
+      font-size: 14px; letter-spacing: 0.02em; text-transform: none; color: var(--text-light-muted); }
+    .message-count { text-align: right; font-size: 12px; color: var(--text-light-muted); margin-top: 6px; }
+
+    /* ================= THANK-YOU MODAL (summary layout) ================= */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(5,5,5,0.8);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 999; padding: 24px; opacity: 0; pointer-events: none;
+      transition: opacity 0.4s cubic-bezier(0.16,1,0.3,1);
+    }
+    .modal-overlay.active { opacity: 1; pointer-events: auto; }
+    .modal {
+      width: 100%; max-width: 470px;
+      transform: scale(0.94) translateY(18px);
+      transition: transform 0.45s cubic-bezier(0.16,1,0.3,1);
+      background: linear-gradient(165deg, var(--black-deep) 0%, var(--black) 60%, var(--black-deep) 100%);
+      border: 1px solid var(--gold-deep);
+      border-radius: 20px; overflow: hidden;
+      max-height: 90vh; display: flex; flex-direction: column;
+      box-shadow: 0 35px 100px rgba(0,0,0,0.7), 0 0 0 6px rgba(184,149,46,0.08);
+    }
+    .modal-overlay.active .modal { transform: scale(1) translateY(0); }
+    .modal-accent { height: 4px; background: linear-gradient(90deg, var(--gold-deep), var(--gold), var(--gold-soft), var(--gold), var(--gold-deep)); flex-shrink: 0; }
+    .modal-scroll { overflow-y: auto; }
+    .modal-header {
+      padding: 34px 30px 20px; text-align: center;
+      border-bottom: 1px solid var(--border-light);
+      background: radial-gradient(circle at 50% 0%, rgba(227,197,103,0.12) 0%, transparent 75%);
+    }
+    .modal-names { font-family: 'Pinyon Script', cursive; font-weight: 400; font-size: clamp(34px, 8.6vw, 44px); color: var(--gold); line-height: 1.2; padding: 0.04em 0.2em 0.1em; }
+    .modal-amp { display: block; font-family: 'Cinzel', serif; font-size: 13px; letter-spacing: 0.4em; text-indent: 0.4em; color: var(--champagne); line-height: 1.4; margin-top: 2px; }
+    .modal-tagline {
+      font-family: 'Cinzel', serif; font-size: 9px; font-weight: 600;
+      letter-spacing: 0.32em; color: var(--text-light-muted); margin-top: 8px;
+      display: block; text-transform: uppercase;
+    }
+    .modal-body { padding: 26px 32px 34px; text-align: center; }
+    .modal-title {
+      font-family: 'Cinzel', serif; font-size: 13px; font-weight: 600;
+      letter-spacing: 0.34em; text-indent: 0.34em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px;
+    }
+    .modal-message {
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: 17px; font-weight: 500; color: var(--text-light-soft); line-height: 1.7; margin-bottom: 24px;
+    }
+    .summary-card {
+      background: rgba(227,197,103,0.05); border: 1px solid var(--border-light);
+      border-radius: 10px; padding: 20px 22px; text-align: left; margin-bottom: 24px;
+    }
+    .summary-row {
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 12px; padding: 11px 0; border-bottom: 1px solid rgba(227,197,103,0.18);
+    }
+    .summary-row:last-child { border-bottom: none; }
+    .summary-label {
+      font-family: 'Cinzel', serif; font-size: 9.5px; font-weight: 600;
+      letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); flex-shrink: 0;
+    }
+    .summary-value { font-family: 'Jost', sans-serif; font-size: 13px; font-weight: 500; color: var(--text-light); text-align: right; }
+    .summary-badge {
+      display: inline-block; padding: 4px 10px; border-radius: 4px;
+      font-family: 'Jost', sans-serif; font-size: 10px; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+    }
+    .summary-badge.accept { background: rgba(227,197,103,0.16); color: var(--gold-soft); border: 1px solid rgba(227,197,103,0.55); }
+    .summary-badge.decline { background: rgba(224,133,133,0.10); color: #f0b8b8; border: 1px solid rgba(224,133,133,0.35); }
+    .summary-names { list-style: none; text-align: right; }
+    .summary-names li { font-size: 13px; color: var(--text-light); line-height: 1.6; }
+    .summary-message { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 15px;
+      color: var(--text-light-soft); line-height: 1.55; text-align: right; white-space: pre-wrap; word-break: break-word; }
+    .modal-actions { display: flex; gap: 10px; }
+    .btn-modal-close {
+      display: inline-flex; align-items: center; justify-content: center;
+      flex: 1; padding: 15px 24px; border-radius: 8px;
+      border: 1px solid var(--gold); cursor: pointer;
+      font-family: 'Cinzel', serif; font-size: 11px; font-weight: 600;
+      letter-spacing: 0.28em; text-transform: uppercase;
+      transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
+      background: var(--gold-deep); color: var(--black-deep);
+    }
+    .btn-modal-close:hover { background: var(--gold); }
+    .btn-modal-close:focus-visible, .btn-submit:focus-visible { outline: 2px solid var(--gold-soft); outline-offset: 3px; }
+
+    @media (max-width: 540px) {
+      .card-header, .tagline-band, .form-body, .btn-wrap,
+      .note-section, .guest-section, .deadline-band, .message-group { padding-left: 26px; padding-right: 26px; }
+      .modal-header, .modal-body { padding-left: 20px; padding-right: 20px; }
+      .suggest-go { display: none; }
+      .age-block { gap: 10px; } .age-side { min-width: 56px; letter-spacing: 0.3em; }
+      .seat-panel { margin: 0 -26px; }
+    }
+    @media (max-width: 380px) {
+      .card-header, .tagline-band, .form-body, .btn-wrap,
+      .note-section, .guest-section, .deadline-band, .message-group { padding-left: 18px; padding-right: 18px; }
+      .seat-panel { margin: 0 -18px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .card-wrap, .bg-glow, .suggest-box.visible { animation: none !important; }
+      .modal { transform: none !important; }
+      #petalCanvas { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="petalCanvas"></canvas>
+
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+  <div class="bg-glow bg-glow-3"></div>
+
+  <!-- ══ MAIN CARD ══ -->
+  <div class="card-wrap">
+    <div class="card-f1"><div class="card-f2"><div class="card">
+      <div class="card-accent-stripe"></div>
+      <div class="card-ib1"></div>
+
+      <div class="card-header">
+        <p class="header-eyebrow">You Are Invited To Celebrate</p>
+        <span class="couple-name">Maricel</span>
+        <div class="age-block">
+          <span class="age-side">Golden<br/>Birthday</span>
+          <span class="age-bar"></span>
+          <span class="age-num">50</span>
+          <span class="age-bar"></span>
+          <span class="age-side">Fifty &amp;<br/>Fabulous</span>
+        </div>
+        <p class="wedding-date"><span class="nw">Monday, December 14, 2026</span> <span class="dot-sep">&middot;</span> <span class="nw">6:00 PM</span></p>
+        <p class="event-venue">Cabana Esperanza &middot; Sorsogon City</p>
+        <div class="names-rule">
+          <div class="names-rule-line-l"></div>
+          <div class="names-rule-dot"></div>
+          <div class="names-rule-flower">&#10047;</div>
+          <div class="names-rule-dot"></div>
+          <div class="names-rule-line-r"></div>
+        </div>
+        <span class="header-title">RSVP</span>
+        <p class="header-subtitle">Your presence would make this milestone golden</p>
+      </div>
+
+      <div class="tagline-band">
+        <p class="tagline-text">
+          Every seat is reserved with love.<br/>
+          <strong>Please confirm your attendance below.</strong>
+        </p>
+      </div>
+
+      <div class="form-body">
+        <div class="field-group">
+          <label class="field-label" for="guestSearch">Guest Name</label>
+          <input type="text" id="guestSearch" class="field-input"
+            placeholder="Type your first name or full name"
+            autocomplete="off" autocorrect="off" autocapitalize="words" spellcheck="false" />
+          <div class="status-bar ready" id="statusBar" aria-live="polite">
+            <div class="status-dot"></div>
+            <span id="statusText">Ready &#8212; enter your name above</span>
+          </div>
+          <div class="suggest-box" id="suggestBox" role="list"></div>
+        </div>
+        <div class="rsvp-section" id="rsvpSection"></div>
+      </div>
+
+      <div id="seatPanel" style="display:none;">
+        <div class="seat-panel">
+          <div class="seat-panel-label">Seats Reserved In Your Honor</div>
+          <div class="seat-number" id="seatNumber">&#8212;</div>
+          <div class="seat-sublabel">guest(s) included in this invitation</div>
+        </div>
+        <div class="guest-section">
+          <div class="field-group" style="margin-top:22px;">
+            <label class="field-label">Confirm Attendance</label>
+            <p class="guest-hint">Toggle each name below to mark who will be attending.</p>
+            <div id="guestFields">
+              <div class="guest-field-row show" id="guestRow1">
+                <span class="guest-num">i.</span>
+                <div class="guest-input-wrap"><input type="text" id="guest1" class="field-input" placeholder="Primary Guest" disabled /></div>
+                <label class="attend-toggle" title="Toggle attendance">
+                  <input type="checkbox" id="guestAttend1" checked onchange="toggleGuestAttendance(1)" />
+                  <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                  <span class="toggle-label" id="guestAttendLabel1">Attending</span>
+                </label>
+              </div>
+              <div class="guest-field-row" id="guestRow2">
+                <span class="guest-num">ii.</span>
+                <div class="guest-input-wrap"><input type="text" id="guest2" class="field-input" autocomplete="off" autocorrect="off" autocapitalize="words" spellcheck="false" placeholder="Guest 2" /></div>
+                <label class="attend-toggle" title="Toggle attendance">
+                  <input type="checkbox" id="guestAttend2" checked onchange="toggleGuestAttendance(2)" />
+                  <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                  <span class="toggle-label" id="guestAttendLabel2">Attending</span>
+                </label>
+              </div>
+              <div class="guest-field-row" id="guestRow3">
+                <span class="guest-num">iii.</span>
+                <div class="guest-input-wrap"><input type="text" id="guest3" class="field-input" autocomplete="off" autocorrect="off" autocapitalize="words" spellcheck="false" placeholder="Guest 3" /></div>
+                <label class="attend-toggle" title="Toggle attendance">
+                  <input type="checkbox" id="guestAttend3" checked onchange="toggleGuestAttendance(3)" />
+                  <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                  <span class="toggle-label" id="guestAttendLabel3">Attending</span>
+                </label>
+              </div>
+              <div class="guest-field-row" id="guestRow4">
+                <span class="guest-num">iv.</span>
+                <div class="guest-input-wrap"><input type="text" id="guest4" class="field-input" autocomplete="off" autocorrect="off" autocapitalize="words" spellcheck="false" placeholder="Guest 4" /></div>
+                <label class="attend-toggle" title="Toggle attendance">
+                  <input type="checkbox" id="guestAttend4" checked onchange="toggleGuestAttendance(4)" />
+                  <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                  <span class="toggle-label" id="guestAttendLabel4">Attending</span>
+                </label>
+              </div>
+              <div class="guest-field-row" id="guestRow5">
+                <span class="guest-num">v.</span>
+                <div class="guest-input-wrap"><input type="text" id="guest5" class="field-input" autocomplete="off" autocorrect="off" autocapitalize="words" spellcheck="false" placeholder="Guest 5" /></div>
+                <label class="attend-toggle" title="Toggle attendance">
+                  <input type="checkbox" id="guestAttend5" checked onchange="toggleGuestAttendance(5)" />
+                  <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                  <span class="toggle-label" id="guestAttendLabel5">Attending</span>
+                </label>
+              </div>
+              <div class="guest-field-row" id="guestRow6">
+                <span class="guest-num">vi.</span>
+                <div class="guest-input-wrap"><input type="text" id="guest6" class="field-input" autocomplete="off" autocorrect="off" autocapitalize="words" spellcheck="false" placeholder="Guest 6" /></div>
+                <label class="attend-toggle" title="Toggle attendance">
+                  <input type="checkbox" id="guestAttend6" checked onchange="toggleGuestAttendance(6)" />
+                  <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                  <span class="toggle-label" id="guestAttendLabel6">Attending</span>
+                </label>
+              </div>
+              <div class="guest-field-row" id="guestRow7">
+                <span class="guest-num">vii.</span>
+                <div class="guest-input-wrap"><input type="text" id="guest7" class="field-input" autocomplete="off" autocorrect="off" autocapitalize="words" spellcheck="false" placeholder="Guest 7" /></div>
+                <label class="attend-toggle" title="Toggle attendance">
+                  <input type="checkbox" id="guestAttend7" checked onchange="toggleGuestAttendance(7)" />
+                  <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                  <span class="toggle-label" id="guestAttendLabel7">Attending</span>
+                </label>
+              </div>
+              <div class="guest-field-row" id="guestRow8">
+                <span class="guest-num">viii.</span>
+                <div class="guest-input-wrap"><input type="text" id="guest8" class="field-input" autocomplete="off" autocorrect="off" autocapitalize="words" spellcheck="false" placeholder="Guest 8" /></div>
+                <label class="attend-toggle" title="Toggle attendance">
+                  <input type="checkbox" id="guestAttend8" checked onchange="toggleGuestAttendance(8)" />
+                  <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                  <span class="toggle-label" id="guestAttendLabel8">Attending</span>
+                </label>
+              </div>
+              <div class="guest-field-row" id="guestRow9">
+                <span class="guest-num">ix.</span>
+                <div class="guest-input-wrap"><input type="text" id="guest9" class="field-input" autocomplete="off" autocorrect="off" autocapitalize="words" spellcheck="false" placeholder="Guest 9" /></div>
+                <label class="attend-toggle" title="Toggle attendance">
+                  <input type="checkbox" id="guestAttend9" checked onchange="toggleGuestAttendance(9)" />
+                  <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                  <span class="toggle-label" id="guestAttendLabel9">Attending</span>
+                </label>
+              </div>
+              <div class="guest-field-row" id="guestRow10">
+                <span class="guest-num">x.</span>
+                <div class="guest-input-wrap"><input type="text" id="guest10" class="field-input" autocomplete="off" autocorrect="off" autocapitalize="words" spellcheck="false" placeholder="Guest 10" /></div>
+                <label class="attend-toggle" title="Toggle attendance">
+                  <input type="checkbox" id="guestAttend10" checked onchange="toggleGuestAttendance(10)" />
+                  <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                  <span class="toggle-label" id="guestAttendLabel10">Attending</span>
+                </label>
+              </div>
+              <div class="guest-field-row" id="guestRow11">
+                <span class="guest-num">xi.</span>
+                <div class="guest-input-wrap"><input type="text" id="guest11" class="field-input" autocomplete="off" autocorrect="off" autocapitalize="words" spellcheck="false" placeholder="Guest 11" /></div>
+                <label class="attend-toggle" title="Toggle attendance">
+                  <input type="checkbox" id="guestAttend11" checked onchange="toggleGuestAttendance(11)" />
+                  <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                  <span class="toggle-label" id="guestAttendLabel11">Attending</span>
+                </label>
+              </div>
+              <div class="guest-field-row" id="guestRow12">
+                <span class="guest-num">xii.</span>
+                <div class="guest-input-wrap"><input type="text" id="guest12" class="field-input" autocomplete="off" autocorrect="off" autocapitalize="words" spellcheck="false" placeholder="Guest 12" /></div>
+                <label class="attend-toggle" title="Toggle attendance">
+                  <input type="checkbox" id="guestAttend12" checked onchange="toggleGuestAttendance(12)" />
+                  <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                  <span class="toggle-label" id="guestAttendLabel12">Attending</span>
+                </label>
+              </div>
+              <div class="guest-field-row" id="guestRow13">
+                <span class="guest-num">xiii.</span>
+                <div class="guest-input-wrap"><input type="text" id="guest13" class="field-input" autocomplete="off" autocorrect="off" autocapitalize="words" spellcheck="false" placeholder="Guest 13" /></div>
+                <label class="attend-toggle" title="Toggle attendance">
+                  <input type="checkbox" id="guestAttend13" checked onchange="toggleGuestAttendance(13)" />
+                  <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                  <span class="toggle-label" id="guestAttendLabel13">Attending</span>
+                </label>
+              </div>
+              <div class="guest-field-row" id="guestRow14">
+                <span class="guest-num">xiv.</span>
+                <div class="guest-input-wrap"><input type="text" id="guest14" class="field-input" autocomplete="off" autocorrect="off" autocapitalize="words" spellcheck="false" placeholder="Guest 14" /></div>
+                <label class="attend-toggle" title="Toggle attendance">
+                  <input type="checkbox" id="guestAttend14" checked onchange="toggleGuestAttendance(14)" />
+                  <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                  <span class="toggle-label" id="guestAttendLabel14">Attending</span>
+                </label>
+              </div>
+              <div class="guest-field-row" id="guestRow15">
+                <span class="guest-num">xv.</span>
+                <div class="guest-input-wrap"><input type="text" id="guest15" class="field-input" autocomplete="off" autocorrect="off" autocapitalize="words" spellcheck="false" placeholder="Guest 15" /></div>
+                <label class="attend-toggle" title="Toggle attendance">
+                  <input type="checkbox" id="guestAttend15" checked onchange="toggleGuestAttendance(15)" />
+                  <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                  <span class="toggle-label" id="guestAttendLabel15">Attending</span>
+                </label>
+              </div>
+              <div class="guest-field-row" id="guestRow16">
+                <span class="guest-num">xvi.</span>
+                <div class="guest-input-wrap"><input type="text" id="guest16" class="field-input" autocomplete="off" autocorrect="off" autocapitalize="words" spellcheck="false" placeholder="Guest 16" /></div>
+                <label class="attend-toggle" title="Toggle attendance">
+                  <input type="checkbox" id="guestAttend16" checked onchange="toggleGuestAttendance(16)" />
+                  <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                  <span class="toggle-label" id="guestAttendLabel16">Attending</span>
+                </label>
+              </div>
+              <div class="guest-field-row" id="guestRow17">
+                <span class="guest-num">xvii.</span>
+                <div class="guest-input-wrap"><input type="text" id="guest17" class="field-input" autocomplete="off" autocorrect="off" autocapitalize="words" spellcheck="false" placeholder="Guest 17" /></div>
+                <label class="attend-toggle" title="Toggle attendance">
+                  <input type="checkbox" id="guestAttend17" checked onchange="toggleGuestAttendance(17)" />
+                  <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                  <span class="toggle-label" id="guestAttendLabel17">Attending</span>
+                </label>
+              </div>
+              <div class="guest-field-row" id="guestRow18">
+                <span class="guest-num">xviii.</span>
+                <div class="guest-input-wrap"><input type="text" id="guest18" class="field-input" autocomplete="off" autocorrect="off" autocapitalize="words" spellcheck="false" placeholder="Guest 18" /></div>
+                <label class="attend-toggle" title="Toggle attendance">
+                  <input type="checkbox" id="guestAttend18" checked onchange="toggleGuestAttendance(18)" />
+                  <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                  <span class="toggle-label" id="guestAttendLabel18">Attending</span>
+                </label>
+              </div>
+              <div class="guest-field-row" id="guestRow19">
+                <span class="guest-num">xix.</span>
+                <div class="guest-input-wrap"><input type="text" id="guest19" class="field-input" autocomplete="off" autocorrect="off" autocapitalize="words" spellcheck="false" placeholder="Guest 19" /></div>
+                <label class="attend-toggle" title="Toggle attendance">
+                  <input type="checkbox" id="guestAttend19" checked onchange="toggleGuestAttendance(19)" />
+                  <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                  <span class="toggle-label" id="guestAttendLabel19">Attending</span>
+                </label>
+              </div>
+              <div class="guest-field-row" id="guestRow20">
+                <span class="guest-num">xx.</span>
+                <div class="guest-input-wrap"><input type="text" id="guest20" class="field-input" autocomplete="off" autocorrect="off" autocapitalize="words" spellcheck="false" placeholder="Guest 20" /></div>
+                <label class="attend-toggle" title="Toggle attendance">
+                  <input type="checkbox" id="guestAttend20" checked onchange="toggleGuestAttendance(20)" />
+                  <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                  <span class="toggle-label" id="guestAttendLabel20">Attending</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="message-group">
+          <label class="field-label" for="celebrantMessage">Message to the Celebrant <span class="optional-tag">(optional)</span></label>
+          <textarea id="celebrantMessage" class="message-input" maxlength="500"
+            placeholder="Share your birthday wishes, a favorite memory, or a few words of love for Maricel…"></textarea>
+          <div class="message-count"><span id="messageCount">0</span> / 500</div>
+        </div>
+        <div class="btn-wrap">
+          <button class="btn-submit" id="submitBtn" onclick="submitRSVP()">
+            <span class="btn-spinner"></span>
+            <span id="submitBtnText">Confirm RSVP</span>
+          </button>
+        </div>
+      </div>
+      <br>
+      <!-- RSVP DEADLINE -->
+      <div class="deadline-band">
+        <span class="deadline-label">RSVP Deadline</span>
+        <span class="deadline-date">Monday, November 23, 2026</span>
+      </div>
+
+      <div class="note-section">
+        <p>Only guests with a <strong>confirmed RSVP</strong> will be accommodated at the celebration. We kindly ask that you refer to the names listed on your invitation.</p>
+        <p><strong>STRICTLY NO PLUS ONES.</strong><br/>Thank you for your kind understanding.</p>
+      </div>
+    </div></div></div>
+  </div>
+
+  <div class="page-footer">
+    <p>Maricel&rsquo;s 50th &#8212; with love &amp; gratitude</p>
+  </div>
+
+  <!-- ══ THANK-YOU MODAL ══ -->
+  <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal" id="modalBox">
+      <div class="modal-accent"></div>
+      <div class="modal-scroll">
+        <div class="modal-header">
+          <div class="modal-names">Maricel<span class="modal-amp">50th Birthday</span></div>
+          <span class="modal-tagline">with love &amp; gratitude &middot; 12.14.2026</span>
+        </div>
+        <div class="modal-body">
+          <h2 class="modal-title" id="modalTitle">Thank You</h2>
+          <p class="modal-message" id="modalMessage">Your response has been received.</p>
+          <div class="summary-card" id="summaryCard"></div>
+          <div class="modal-actions">
+            <button class="btn-modal-close" id="modalCloseBtn" onclick="closeModal()">Back to RSVP</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* ── Elegant falling flower animation, in gold ──
+       Thin stroked petal outlines in shades of gold, gentle single
+       sway, slow even rotation, low opacity — spare and understated. */
+    (function () {
+      var canvas = document.getElementById('petalCanvas');
+      var ctx = canvas.getContext('2d');
+      var flowers = [];
+      var colors = ['#E3C567', '#F0DFA0', '#B8952E', '#D8C39A'];
+      var W, H;
+
+      function resize() {
+        W = canvas.width = window.innerWidth;
+        H = canvas.height = window.innerHeight;
+      }
+      window.addEventListener('resize', resize);
+      resize();
+
+      function Flower() {
+        this.init(true);
+      }
+      Flower.prototype.init = function (randomY) {
+        this.baseX = Math.random() * W;
+        this.x = this.baseX;
+        this.y = randomY ? Math.random() * H : Math.random() * -H;
+
+        this.size = 6 + Math.random() * 6;
+        this.speedY = 0.2 + Math.random() * 0.26;
+
+        this.swayAmp = 10 + Math.random() * 15;
+        this.swaySpeed = 0.0006 + Math.random() * 0.0008;
+        this.swayOffset = Math.random() * 6.283;
+
+        this.rotation = Math.random() * 360;
+        this.rotationSpeed = (Math.random() - 0.5) * 0.3;
+
+        this.opacity = 0.4 + Math.random() * 0.32;
+        this.color = colors[Math.floor(Math.random() * colors.length)];
+      };
+      Flower.prototype.update = function (t) {
+        this.y += this.speedY;
+        this.x = this.baseX + Math.sin(t * this.swaySpeed + this.swayOffset) * this.swayAmp;
+        this.rotation += this.rotationSpeed;
+
+        if (this.y > H + 24) {
+          this.init(false);
+          this.y = -24;
+        }
+      };
+      Flower.prototype.draw = function () {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate((this.rotation * Math.PI) / 180);
+        ctx.globalAlpha = this.opacity;
+        ctx.strokeStyle = this.color;
+        ctx.lineWidth = 1;
+
+        var r = this.size;
+        for (var p = 0; p < 5; p++) {
+          ctx.save();
+          ctx.rotate((p * 2 * Math.PI) / 5);
+          ctx.beginPath();
+          ctx.moveTo(0, 0);
+          ctx.quadraticCurveTo(r * 0.42, -r * 0.32, 0, -r);
+          ctx.quadraticCurveTo(-r * 0.42, -r * 0.32, 0, 0);
+          ctx.stroke();
+          ctx.restore();
+        }
+
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(0, 0, r * 0.14, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.restore();
+      };
+
+      var count = window.innerWidth < 540 ? 10 : 16;
+      for (var i = 0; i < count; i++) {
+        var f = new Flower();
+        f.y = Math.random() * H;
+        flowers.push(f);
+      }
+
+      function animate(t) {
+        ctx.clearRect(0, 0, W, H);
+        for (var i = 0; i < flowers.length; i++) {
+          flowers[i].update(t || 0);
+          flowers[i].draw();
+        }
+        requestAnimationFrame(animate);
+      }
+      requestAnimationFrame(animate);
+    })();
+
+    /* ============================================================
+       Vercel backend bridge — same call style as google.script.run:
+       server.run.withSuccessHandler(fn).withFailureHandler(fn).someFunction(args)
+       Every call is a POST to /api/rpc (see api/rpc.js).
+    ============================================================ */
+    var server = {
+      get run() {
+        var ok = null, fail = null, runner;
+        runner = new Proxy({}, { get: function (_, fnName) {
+          if (fnName === 'withSuccessHandler') return function (f) { ok = f; return runner; };
+          if (fnName === 'withFailureHandler') return function (f) { fail = f; return runner; };
+          return function () {
+            var args = Array.prototype.slice.call(arguments);
+            var headers = { 'Content-Type': 'application/json' };
+            var token = null;
+            try { token = sessionStorage.getItem('rsvpAdminToken'); } catch (e) {}
+            if (token) headers['x-admin-token'] = token;
+            fetch('/api/rpc', { method: 'POST', headers: headers, body: JSON.stringify({ fn: fnName, args: args }) })
+              .then(function (res) {
+                return res.json().catch(function () {
+              return { message: 'The server returned an unexpected response (HTTP ' + res.status + ').' };
+            }).then(function (body) {
+                  if (res.status === 401 && body.authError && window.onAdminAuthExpired) { window.onAdminAuthExpired(body.message); return; }
+                  if (!res.ok) throw new Error(body.message || ('HTTP ' + res.status));
+                  if (ok) ok(body);
+                });
+              })
+              .catch(function (err) { if (fail) fail(err); });
+          };
+        }});
+        return runner;
+      }
+    };
+    
+    var MAX_GUESTS = 20;
+    var currentGuestData = null;
+    var searchTimer = null;
+
+    var searchInput = document.getElementById('guestSearch');
+    var statusBar   = document.getElementById('statusBar');
+    var statusText  = document.getElementById('statusText');
+    var seatPanel   = document.getElementById('seatPanel');
+    var seatNumber  = document.getElementById('seatNumber');
+    var suggestBox  = document.getElementById('suggestBox');
+
+    function setStatus(msg, cls) {
+      statusText.textContent = msg;
+      statusBar.className = 'status-bar' + (cls ? ' ' + cls : '');
+    }
+
+    function esc(s) {
+      return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+        return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c];
+      });
+    }
+
+    /* ---------- "Did you mean" suggestions ---------- */
+    function showSuggestions(list) {
+      suggestBox.innerHTML = '';
+      list.forEach(function (name) {
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'suggest-btn';
+        btn.setAttribute('role', 'listitem');
+        btn.innerHTML = '<span class="suggest-name">' + esc(name) + '</span><span class="suggest-go">This is me &rsaquo;</span>';
+        btn.addEventListener('click', function () { pickSuggestion(name); });
+        suggestBox.appendChild(btn);
+      });
+      suggestBox.classList.add('visible');
+    }
+
+    function hideSuggestions() {
+      suggestBox.classList.remove('visible');
+      suggestBox.innerHTML = '';
+    }
+
+    function pickSuggestion(name) {
+      clearTimeout(searchTimer);
+      searchInput.value = name;
+      hideSuggestions();
+      seatPanel.style.display = 'none';
+      currentGuestData = null;
+      setStatus('Opening your invitation…');
+      lookupGuest(name);
+    }
+
+    var messageInput = document.getElementById('celebrantMessage');
+    messageInput.addEventListener('input', function () {
+      document.getElementById('messageCount').textContent = messageInput.value.length;
+    });
+
+    function resetGuestRows() {
+      for (var i = 2; i <= MAX_GUESTS; i++) {
+        var row = document.getElementById('guestRow' + i);
+        if (row) row.classList.remove('show');
+        var input = document.getElementById('guest' + i);
+        if (input) input.value = '';
+        resetToggle(i);
+      }
+      resetToggle(1);
+    }
+
+    function resetToggle(i) {
+      var cb = document.getElementById('guestAttend' + i);
+      var lbl = document.getElementById('guestAttendLabel' + i);
+      if (cb) cb.checked = true;
+      if (lbl) lbl.textContent = 'Attending';
+    }
+
+    function toggleGuestAttendance(i) {
+      var cb = document.getElementById('guestAttend' + i);
+      var lbl = document.getElementById('guestAttendLabel' + i);
+      if (cb && lbl) lbl.textContent = cb.checked ? 'Attending' : 'Not Attending';
+    }
+
+    searchInput.addEventListener('input', function () {
+      clearTimeout(searchTimer);
+      var name = searchInput.value.trim();
+      seatPanel.style.display = 'none';
+      currentGuestData = null;
+      hideSuggestions();
+
+      if (!name) { setStatus('Ready — enter your name above'); return; }
+
+      setStatus('Searching guest list…');
+      searchTimer = setTimeout(function () { lookupGuest(name); }, 500);
+    });
+
+    function lookupGuest(name) {
+      server.run
+        .withSuccessHandler(function (res) { onLookupResult(res, name); })
+        .withFailureHandler(function () { setStatus('An error occurred while searching. Please try again.', 'error'); })
+        .getGuestData(name);
+    }
+
+    function onLookupResult(res, typedName) {
+      if (searchInput.value.trim() !== typedName) return; // stale response
+      hideSuggestions();
+
+      if (res && res.closed) {
+        setStatus(res.message || 'RSVPs are now closed.', 'error');
+        return;
+      }
+      if (res && !res.found && res.suggestions && res.suggestions.length) {
+        setStatus(res.suggestions.length === 1 ? 'Did you mean this name?' : 'Did you mean one of these names?', 'suggest');
+        showSuggestions(res.suggestions);
+        return;
+      }
+      if (!res || !res.found) {
+        setStatus('We couldn’t find that name — please check the spelling on your invitation.', 'error');
+        return;
+      }
+      if (res.alreadySubmitted) {
+        setStatus('An RSVP has already been submitted for ' + res.name + '.', 'error');
+        return;
+      }
+
+      currentGuestData = res;
+      setStatus('Invitation found — welcome, ' + res.name + '.', 'found');
+      seatNumber.textContent = res.seat;
+      seatPanel.style.display = 'block';
+      resetGuestRows();
+
+      document.getElementById('guest1').value = res.name;
+      for (var i = 2; i <= res.seat; i++) {
+        var row = document.getElementById('guestRow' + i);
+        if (row) row.classList.add('show');
+      }
+    }
+
+    function submitRSVP() {
+      if (!currentGuestData) return;
+      var btn = document.getElementById('submitBtn');
+      var btnText = document.getElementById('submitBtnText');
+      btn.disabled = true; btn.classList.add('loading'); btnText.textContent = 'Submitting…';
+
+      var mainCb = document.getElementById('guestAttend1');
+      var mainStatus = (mainCb && mainCb.checked) ? 'Joyfully Accepts' : 'Regretfully Declines';
+
+      var celebrantMessage = document.getElementById('celebrantMessage').value.trim().slice(0, 500);
+      var payload = {
+        action: 'submit',
+        name: currentGuestData.name,
+        mainStatus: mainStatus,
+        totalSeat: currentGuestData.seat,
+        message: celebrantMessage
+      };
+
+      for (var i = 2; i <= currentGuestData.seat; i++) {
+        var input = document.getElementById('guest' + i);
+        var cb = document.getElementById('guestAttend' + i);
+        var gName = input ? input.value.trim() : '';
+        var gStatus = (cb && cb.checked) ? 'Joyfully Accepts' : 'Regretfully Declines';
+        payload['guest' + i] = gName;
+        payload['status' + i] = gStatus;
+      }
+
+      var attendingNames = [];
+      if (mainStatus === 'Joyfully Accepts') attendingNames.push(currentGuestData.name);
+      for (var k = 2; k <= currentGuestData.seat; k++) {
+        if (payload['guest' + k] && payload['status' + k] === 'Joyfully Accepts') attendingNames.push(payload['guest' + k]);
+      }
+      var summary = {
+        name: currentGuestData.name,
+        attendance: attendingNames.length ? 'Joyfully Accepts' : 'Regretfully Declines',
+        seatCount: attendingNames.length,
+        guestNames: attendingNames,
+        message: celebrantMessage
+      };
+
+      server.run
+        .withSuccessHandler(function (res) {
+          btn.disabled = false; btn.classList.remove('loading'); btnText.textContent = 'Confirm RSVP';
+          if (res && res.success) {
+            showModal(res.message, summary);
+          } else {
+            setStatus((res && res.message) || 'Submission failed. Please try again.', 'error');
+          }
+        })
+        .withFailureHandler(function () {
+          btn.disabled = false; btn.classList.remove('loading'); btnText.textContent = 'Confirm RSVP';
+          setStatus('An error occurred while submitting. Please try again.', 'error');
+        })
+        .submitForm(payload);
+    }
+
+    function showModal(msg, summary) {
+      document.getElementById('modalMessage').innerHTML = 'Your response has been received.<br>' + esc(msg || 'We can’t wait to celebrate with you!');
+      summary = summary || {};
+      var isAccept = summary.attendance === 'Joyfully Accepts';
+      var badge = '<span class="summary-badge ' + (isAccept ? 'accept' : 'decline') + '">' + (isAccept ? 'Joyfully Accepts' : 'Regretfully Declines') + '</span>';
+      var namesHtml = (summary.guestNames && summary.guestNames.length)
+        ? '<ul class="summary-names">' + summary.guestNames.map(function (n) { return '<li>' + esc(n) + '</li>'; }).join('') + '</ul>'
+        : '<span class="summary-value">—</span>';
+      document.getElementById('summaryCard').innerHTML =
+        '<div class="summary-row"><span class="summary-label">Guest</span><span class="summary-value">' + esc(summary.name || '') + '</span></div>' +
+        '<div class="summary-row"><span class="summary-label">Response</span>' + badge + '</div>' +
+        '<div class="summary-row"><span class="summary-label">Attending</span><span class="summary-value">' + (summary.seatCount || 0) + '</span></div>' +
+        '<div class="summary-row"><span class="summary-label">Guest Name(s)</span>' + namesHtml + '</div>' +
+        (summary.message ? '<div class="summary-row"><span class="summary-label">Your Message</span><span class="summary-message">' + esc(summary.message) + '</span></div>' : '');
+      document.getElementById('modalOverlay').classList.add('active');
+      setTimeout(function () { var b = document.getElementById('modalCloseBtn'); if (b) b.focus(); }, 60);
+    }
+
+    /* "Back to RSVP" returns guests to a fresh RSVP form */
+    function closeModal() {
+      document.getElementById('modalOverlay').classList.remove('active');
+      setTimeout(function () { window.location.reload(); }, 400);
+    }
+    document.getElementById('modalOverlay').addEventListener('click', function (e) { if (e.target === this) closeModal(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && document.getElementById('modalOverlay').classList.contains('active')) closeModal(); });
+  </script>
+</body>
+</html>
